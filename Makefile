@@ -34,8 +34,10 @@ test: all
 		fi; \
 	done; \
 	echo "$$correct/$$total tests passed."; \
-	if [ $$total -ne $$correct ]; then \
-		$(error Some tests failed!)
+	if [ "$$total" -ne "$$correct" ]; then \
+		echo "Not all tests passed!";\
+		exit 1;\
+	fi
 
 
 .PHONY: all clean test
