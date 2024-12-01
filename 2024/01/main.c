@@ -28,6 +28,9 @@ int abs(int x)
 
 int main ()
 {
+    ///          ///
+    /// PART ONE ///
+    ///          ///
     // We'll make use of glibc's sorting functions, since I feel like those
     // are out of the scope of this exercise.
 
@@ -120,19 +123,19 @@ int main ()
         free(rhs_local_head);
     }
 
-    // Now we can use quicksort!
-    // Uh, if you've never dealt with function pointers...
-    // Sucks to suck, I guess.
-    // Fine. Here's how qsort works. These are the args, in order:
-    // - the array
-    // - number of elements
-    // - size of an element
-    // - function to compare two elements
-    //   This function returns 0 if equal, 1 if greater, -1 if lesser.
-    //   You just put the function name as an argument, and qsort will use that function.
-    //   This function must have the signature:
-    //       int func (const void * p1, const void * p2)
-    //   Any decent language would use a lamda / closure to do this, but C is old and crusty.
+    /* Now we can use quicksort!
+    *  Uh, if you've never dealt with function pointers...
+    *  Sucks to suck, I guess.
+    *  Fine. Here's how qsort works. These are the args, in order:
+    *  - the array
+    *  - number of elements
+    *  - size of an element
+    *  - function to compare two elements
+    *    This function returns 0 if equal, 1 if greater, -1 if lesser.
+    *    You just put the function name as an argument, and qsort will use that function.
+    *    This function must have the signature:
+    *        int func (const void * p1, const void * p2)
+    *    Any decent language would use a lamda / closure to do this, but C is old and crusty. */
     qsort(lhs_ints, line_count, sizeof(int), compare_ints);
     qsort(rhs_ints, line_count, sizeof(int), compare_ints);
 
@@ -147,7 +150,44 @@ int main ()
     }
 
     // Tada!
-    printf("%i", distance);
+    printf("%i\n", distance);
+
+    ///          ///
+    /// PART TWO ///
+    ///          ///
+    /* Now, we just have to figure out the simmilarity score.
+    *  We'll use a very dumb approach, this is essentially a really
+    *  quick and dirty hashmap where we associate a number to its appearance count
+    *  ... But I'm lazy to make a full hashmap, so an array as large as the largest
+    *  number is good enough for me.
+    *  Yeah, this is VERY dirty, but it works. Make it work, make it clean, make it fast
+    *  TODO: Make it clean
+    *  TODO: Make it fast
+    *  TODO: Make sure that it works in the first place */
+    int largest_lhs_int = lhs_ints[line_count - 1];
+    int * appearance_list = malloc(sizeof(int) * largest_lhs_int);
+    int similarity_score = 0;
+
+    if (appearance_list == NULL)
+        exit(3);
+
+    // First loop, make sure that every appearance is set to 0 for now
+    for (int i = 0; i < largest_lhs_int; i++)
+        appearance_list[i] = 0;
+
+    // Second loop, for every input of the RHS, increment its appearance by one
+    for (int i = 0; i < line_count; i++)
+        appearance_list[rhs_ints[i]]++;
+
+    // Third loop, for every input of the LHS, increment the similiarity score
+    // by itself times how many times it appeared in the RHS
+    for (int i = 0; i < line_count; i++)
+    {
+        similarity_score += lhs_ints[i] * appearance_list[lhs_ints[i]];
+    }
+
+    // Tada!
+    printf("%i", similarity_score);
 
     // Finally, clean up the last arrays
     free(lhs_ints);
