@@ -33,7 +33,9 @@ test: all
 			echo "$$answer not found for $$bin"; \
 		fi; \
 	done; \
-	echo "$$correct/$$total tests passed."
+	echo "$$correct/$$total tests passed."; \
+	if [ $$total -ne $$correct ]; then \
+		$(error Some tests failed!)
 
 
 .PHONY: all clean test
