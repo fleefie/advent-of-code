@@ -2,6 +2,8 @@
 
 ![Testing answers](https://github.com/fleefie/advent-of-code/actions/workflows/c-cpp.yml/badge.svg)
 
+^ If this is ever red, then I probably used a non-standard C extension. Oops.
+
 ### Compiling:
 
     make
