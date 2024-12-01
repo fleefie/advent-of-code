@@ -1,5 +1,7 @@
 # Fleefie's advent of code repository!
 
+![Testing answers](https://github.com/fleefie/advent-of-code/actions/workflows/c-cpp.yml/badge.svg)
+
 ### Compiling:
 
     make
