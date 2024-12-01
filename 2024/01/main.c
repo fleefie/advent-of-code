@@ -147,7 +147,7 @@ int main ()
     }
 
     // Tada!
-    printf("%i\n", distance);
+    printf("%i", distance);
 
     // Finally, clean up the last arrays
     free(lhs_ints);
