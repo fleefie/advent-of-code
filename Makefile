@@ -3,12 +3,12 @@ BINS := $(SRCS:main.c=main.elf)
 
 all: $(BINS)
 
-./%/bin: ./%/main.c
+./%/main.elf: ./%/main.c
 	@echo "Compiling $< into $@"
 	@$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	@echo "Cleaning up..."
-	@find -name bin -exec rm -f {} +
+	@find -name main.elf -exec rm -f {} +
 
 .PHONY: all clean
