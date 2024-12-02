@@ -192,4 +192,6 @@ int main ()
     // Finally, clean up the last arrays
     free(lhs_ints);
     free(rhs_ints);
+
+    fclose(input_file);
 }
